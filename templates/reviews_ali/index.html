@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ТЕХНОЛАУНЖ</title>
+</head>
+<body>
+    {% for news in news_list %}
+        <h4>{{ news.title }}</h4>
+        <img src="{{ news.image.url }}" alt="" style="max-width: 100px;">
+        <p>{{ news.less_description }}</p>
+    {% endfor %}
+</body>
+</html>
