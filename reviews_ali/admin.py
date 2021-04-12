@@ -10,6 +10,7 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 class ReviewsAdminForm(forms.ModelForm):
     description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+    video = forms.CharField(label="Видео", widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Reviews

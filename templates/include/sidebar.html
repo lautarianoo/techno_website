@@ -8,10 +8,10 @@
                                        aria-hidden="true"></span></button>
     </form>
 </div>
-<div class="search-bar w3layouts-newsletter" style="margin-top: 20px;">
-    <h3 class="sear-head editContent">Поиск актёра</h3>
-    <form action="#" method="get" class="d-flex editContent">
-        <input type="search" placeholder="Введите имя актёра..." name="actor"
+<div class="search-bar w3layouts-newsletter" style="margin-top: 50px;">
+    <h3 class="sear-head editContent">Поиск видео-обзора</h3>
+    <form action="{% url 'reviews_ali:search_video' %}" method="get" class="d-flex editContent">
+        <input type="search" placeholder="Введите название видео..." name="search_video"
                class="form-control" required="">
         <button type="submit" class="btn1 btn"><span class="fa fa-search"
                                        aria-hidden="true"></span></button>

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'reviews_ali',
     'bootstrap3',
+    'embed_video',
 ]
 
 MIDDLEWARE = [
