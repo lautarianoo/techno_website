@@ -1,8 +1,8 @@
 {% load video_tag %}
 <div class="search-bar w3layouts-newsletter">
-    <h3 class="sear-head editContent">Поиск фильма</h3>
-    <form action="#" method="get" class="d-flex editContent">
-        <input type="search" placeholder="Введите название фильма..." name="q"
+    <h3 class="sear-head editContent">Поиск новостей</h3>
+    <form action="{% url 'reviews_ali:search_news' %}" method="get" class="d-flex editContent">
+        <input type="search" placeholder="Введите новость..." name="search_news"
                class="form-control" required="">
         <button type="submit" class="btn1 btn"><span class="fa fa-search"
                                        aria-hidden="true"></span></button>
@@ -17,20 +17,7 @@
                                        aria-hidden="true"></span></button>
     </form>
 </div>
-<!--preference -->
-<form action="#" method="get">
-    <div class="left-side my-4">
-        <h3 class="sear-head editContent">Жанры</h3>
-        <ul class="w3layouts-box-list">
-            {% for genre in view.get_genres %}
-                <li class="editContent">
-                    <input type="checkbox" class="checked" name="genre" value="{{ genre.id }}">
-                    <span class="span editContent">{{ genre.name }}</span>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <!-- // preference -->
+
     <!-- discounts -->
 
 
