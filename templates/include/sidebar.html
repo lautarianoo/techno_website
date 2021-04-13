@@ -21,13 +21,23 @@
 <div class="search-bar w3layouts-newsletter" style="margin-top: 50px;">
     <h3 class="sear-head editContent">Поиск товара Aliexpress</h3>
     <form action="{% url 'reviews_ali:search_ali' %}" method="get" class="d-flex editContent">
-        <input type="search" placeholder="Введите название видео..." name="search_ali"
+        <input type="search" placeholder="Введите название товара..." name="search_ali"
                class="form-control" required="">
         <button type="submit" class="btn1 btn"><span class="fa fa-search"
                                        aria-hidden="true"></span></button>
     </form>
 </div>
-
+    <div class="left-side my-4">
+        <h3 class="sear-head editContent">Категории</h3>
+        <ul class="w3layouts-box-list">
+            {% for category in category_list %}
+                <li class="editContent">
+                <input type="checkbox" class="checked" name="category" value="{{ category.id }}">
+                <span class="span editContent">{{ category.title }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
     <!-- discounts -->
 
 

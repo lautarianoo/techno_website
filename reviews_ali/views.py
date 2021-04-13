@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView
-from .models import News, Reviews, Aliexpress
+from .models import News, Reviews, Aliexpress, Category
 from .forms import FeedbacksForm
 
 class Index(ListView):
@@ -33,6 +33,10 @@ class VideoView(ListView):
     queryset = Reviews.objects.all()
     template_name = 'reviews_ali/video.html'
 
+class CategoryGet(ListView):
+    model = Category
+    queryset = Category.objects.all()
+    template_name = 'include/sidebar.html'
 
 class VideoDetaillView(DetailView):
     model = Reviews
