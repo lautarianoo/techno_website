@@ -66,3 +66,15 @@ class AddFeedback(View):
             form.video = video
             form.save()
         return redirect(video.get_absolute_url())
+
+class AddFeedbackNews(View):
+    def post(self, request, pk):
+        form = FeedbacksForm(request.POST)
+        news = News.objects.get(id=pk)
+        if form.is_valid():
+            form = form.save(commit=False)
+            if request.POST.get('parent', None):
+                form.parent_id = int(request.POST.get('parent'))
+            form.news = news
+            form.save()
+        return redirect(news.get_absolute_url())

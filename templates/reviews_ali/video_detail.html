@@ -94,9 +94,9 @@
                 <!--  //contact form grid ends here -->
             </div>
         </div>
-        {% for feedback in feedback.get_review %}
+        {% for feedback in reviews.get_review %}
             <div class="media py-5">
-                <img src="#" class="mr-3 img-fluid" alt="image" style="max-width: 70px;">
+                <img src="{% static 'images/48-488554_power-golf-therapy-has-played-a-major-role.png' %}" class="mr-3 img-fluid" alt="image" style="max-width: 70px;">
                 <div class="media-body mt-4">
                     <h5 class="mt-0 editContent">
                         {{ feedback.name }}
@@ -109,7 +109,7 @@
                     {% for fdb in feedback.feedback_set.all %}
                         <div class="media mt-5 editContent">
                             <a class="pr-3" href="#">
-                                <img src="#" class="img-fluid "
+                                <img src="{% static 'images/48-488554_power-golf-therapy-has-played-a-major-role.png' %}" class="img-fluid "
                                      alt="image" style="max-width: 70px;">
                             </a>
                             <div class="media-body">

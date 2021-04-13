@@ -49,6 +49,12 @@ class News(models.Model):
     category_news = models.ForeignKey(Category, verbose_name='Категории новости', related_name='news_category', on_delete=models.CASCADE)
     url = models.SlugField(max_length=130, unique=True)
 
+    def get_review(self):
+        return self.feedbacknews_set.filter(parent__isnull=True)
+
+    def get_absolute_url(self):
+        return reverse("reviews_ali:news_detail", kwargs={"slug": self.url})
+
     def __str__(self):
         return self.title
 
