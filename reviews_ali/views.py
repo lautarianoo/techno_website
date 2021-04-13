@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, DetailView
-from .models import News, Reviews
+from .models import News, Reviews, Aliexpress
 from .forms import FeedbacksForm
 
 class Index(ListView):
@@ -78,3 +78,25 @@ class AddFeedbackNews(View):
             form.news = news
             form.save()
         return redirect(news.get_absolute_url())
+
+class AliexpressView(ListView):
+    model = Aliexpress
+    queryset = Aliexpress.objects.all()
+    template_name = 'reviews_ali/aliexpress_list.html'
+
+class AliexpressDetail(DetailView):
+    model = Aliexpress
+    slug_field = 'url'
+    queryset = Aliexpress.objects.all()
+    template_name = 'reviews_ali/aliexpress_detail.html'
+
+class SearchAli(ListView):
+    template_name = 'reviews_ali/aliexpress_list.html'
+
+    def get_queryset(self):
+        return Aliexpress.objects.filter(title__icontains=self.request.GET.get('search_ali'))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['search_ali'] = f'searchali={self.request.GET.get("search_ali")}&'
+        return context

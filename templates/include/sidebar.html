@@ -18,6 +18,16 @@
     </form>
 </div>
 
+<div class="search-bar w3layouts-newsletter" style="margin-top: 50px;">
+    <h3 class="sear-head editContent">Поиск товара Aliexpress</h3>
+    <form action="{% url 'reviews_ali:search_ali' %}" method="get" class="d-flex editContent">
+        <input type="search" placeholder="Введите название видео..." name="search_ali"
+               class="form-control" required="">
+        <button type="submit" class="btn1 btn"><span class="fa fa-search"
+                                       aria-hidden="true"></span></button>
+    </form>
+</div>
+
     <!-- discounts -->
 
 

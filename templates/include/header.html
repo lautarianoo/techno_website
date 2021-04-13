@@ -14,18 +14,7 @@
             <ul class="menu mt-2">
                 <li class="active"><a href="#">Главная</a></li>
                 <li>
-                    <!-- First Tier Drop Down -->
-                    <label for="drop-2" class="toggle">Категории <span
-                            class="fa fa-angle-down" aria-hidden="true"></span> </label>
-                    <a href="#">Категории <span class="fa fa-angle-down"
-                                                aria-hidden="true"></span></a>
-                    <input type="checkbox" id="drop-2">
-                    <ul>
-                        {% get_categories as categories %}
-                        {% for category in categories %}
-                            <li><a href="/">{{ category.title }}</a></li>
-                        {% endfor %}
-                    </ul>
+                    <a href="{% url 'reviews_ali:video' %}">Видео-обзоры</a>
                 </li>
                 <li>
                     <li><a href="#">Настройки</a>

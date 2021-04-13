@@ -67,7 +67,7 @@ class Feedback(models.Model):
     email = models.EmailField()
     video = models.ForeignKey(Reviews, verbose_name='Видео', on_delete=models.CASCADE, null=True)
     name = models.CharField('Имя', max_length=50)
-    text = models.TextField(max_length=1000)
+    text = models.TextField(max_length=3000)
     parent = models.ForeignKey('self', verbose_name='Родитель',
                                on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -83,7 +83,7 @@ class FeedbackNews(models.Model):
     email = models.EmailField()
     news = models.ForeignKey(News, verbose_name='Видео', on_delete=models.CASCADE)
     name = models.CharField('Имя', max_length=50)
-    text = models.TextField(max_length=1000)
+    text = models.TextField(max_length=3000)
     parent = models.ForeignKey('self', verbose_name='Родитель',
                                on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -93,3 +93,22 @@ class FeedbackNews(models.Model):
     class Meta:
         verbose_name = "Отзыв для новости"
         verbose_name_plural = "Отзывы для новостей"
+
+class Aliexpress(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    less_description = models.TextField(max_length=1000)
+    price = models.FloatField(default=0)
+    category = models.ForeignKey(Category, verbose_name='Категории', on_delete=models.CASCADE)
+    video = models.CharField(max_length=500, blank=True)
+    poster = models.ImageField(upload_to='ali_posters/')
+    photo = models.ImageField(upload_to='ali_photos/')
+    aliurl = models.URLField()
+    url = models.SlugField(max_length=130, unique=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Али-товар'
+        verbose_name_plural = 'Али-товары'
