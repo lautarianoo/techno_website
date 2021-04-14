@@ -49,8 +49,6 @@ class News(models.Model):
     category_news = models.ForeignKey(Category, verbose_name='Категории новости', related_name='news_category', on_delete=models.CASCADE)
     url = models.SlugField(max_length=130, unique=True)
 
-    def get_review(self):
-        return self.feedbacknews_set.filter(parent__isnull=True)
 
     def get_absolute_url(self):
         return reverse("reviews_ali:news_detail", kwargs={"slug": self.url})
@@ -78,21 +76,6 @@ class Feedback(models.Model):
         verbose_name = "Отзыв для видео"
         verbose_name_plural = "Отзывы для видео"
 
-class FeedbackNews(models.Model):
-    # Отзывы для новости
-    email = models.EmailField()
-    news = models.ForeignKey(News, verbose_name='Видео', on_delete=models.CASCADE)
-    name = models.CharField('Имя', max_length=50)
-    text = models.TextField(max_length=3000)
-    parent = models.ForeignKey('self', verbose_name='Родитель',
-                               on_delete=models.SET_NULL, blank=True, null=True)
-
-    def __str__(self):
-        return f'{self.email} - {self.name}'
-
-    class Meta:
-        verbose_name = "Отзыв для новости"
-        verbose_name_plural = "Отзывы для новостей"
 
 class Aliexpress(models.Model):
     title = models.CharField(max_length=200)

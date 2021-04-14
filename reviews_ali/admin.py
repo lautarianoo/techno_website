@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Category, Reviews, News, Feedback, FeedbackNews, Aliexpress
+from .models import Category, Reviews, News, Feedback, Aliexpress
 
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -27,12 +27,6 @@ class CategoryAdmin(admin.ModelAdmin):
 class FeedbackInline(admin.TabularInline):
     """Отзывы на странице фильма"""
     model = Feedback
-    extra = 0
-    readonly_fields = ("name", "email")
-
-class FeedbackNewsInline(admin.TabularInline):
-    """Отзывы на странице фильма"""
-    model = FeedbackNews
     extra = 0
     readonly_fields = ("name", "email")
 
@@ -85,11 +79,6 @@ class FeedbackAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "parent", "video", "id")
     readonly_fields = ("name", "email")
 
-@admin.register(FeedbackNews)
-class FeedbackNewsAdmin(admin.ModelAdmin):
-    """Отзывы"""
-    list_display = ("name", "email", "parent", "news", "id")
-    readonly_fields = ("name", "email")
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
@@ -97,7 +86,6 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = ('title', 'category_news', 'url', 'date', 'get_image',)
     list_filter = ('category_news', 'date',)
     search_fields = ('title', 'category_news__title',)
-    inlines = [FeedbackNewsInline]
     form = ReviewsAdminForm
     actions = ['publish', 'unpublish']
 

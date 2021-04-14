@@ -407,7 +407,6 @@ li > a:only-child:after {
     background-color: rgba(0, 0, 0, 0);
     margin-top: 0;
     background-image: url('../1002351_source.png');
-    max-width: 300px;
 }
 
 /*-- place holder --*/

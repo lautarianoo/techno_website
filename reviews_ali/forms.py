@@ -10,3 +10,4 @@ class FeedbacksForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control border'}),
             'text': forms.Textarea(attrs={'class': 'form-control border'})
         }
+

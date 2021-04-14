@@ -27,10 +27,11 @@
                                        aria-hidden="true"></span></button>
     </form>
 </div>
+<form action="{% url 'reviews_ali:filter_category' %}" method="get">
     <div class="left-side my-4">
         <h3 class="sear-head editContent">Категории</h3>
         <ul class="w3layouts-box-list">
-            {% for category in category_list %}
+            {% for category in view.get_category %}
                 <li class="editContent">
                 <input type="checkbox" class="checked" name="category" value="{{ category.id }}">
                 <span class="span editContent">{{ category.title }}</span>
@@ -38,6 +39,8 @@
             {% endfor %}
         </ul>
     </div>
+    <button type="submit">Найти</button>
+</form>
     <!-- discounts -->
 
 

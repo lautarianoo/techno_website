@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Index, NewsDetailView, SearchVideo, SearchFilm, VideoView, VideoDetaillView, AddFeedback, AddFeedbackNews, AliexpressView, AliexpressDetail, SearchAli
+from .views import Index, NewsDetailView, SearchVideo, SearchFilm, VideoView, VideoDetaillView, AddFeedback, AliexpressView, AliexpressDetail, SearchAli, FilterCategory
 
 urlpatterns = [
     path('', Index.as_view(), name='index'),
@@ -9,8 +9,8 @@ urlpatterns = [
     path('video-detail/<slug:slug>', VideoDetaillView.as_view(), name='video_detail'),
     path('searchvideo/', SearchVideo.as_view(), name='search_video'),
     path('addfeedback/<int:pk>', AddFeedback.as_view(), name='feedbackadd'),
-    path('addfeedbackn/<int:pk>', AddFeedbackNews.as_view(), name='feedbackaddnews'),
     path('aliexpress/', AliexpressView.as_view(), name='alexpress'),
+    path('filtercategory/', FilterCategory.as_view(), name='filter_category'),
     path('aliexpress_detail/<slug:slug>', AliexpressDetail.as_view(), name='aliexpress_detail'),
     path('searchali/', SearchAli.as_view(), name='search_ali')
 ]

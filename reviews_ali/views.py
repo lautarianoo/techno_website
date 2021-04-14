@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -6,18 +7,24 @@ from django.views.generic import ListView, DetailView
 from .models import News, Reviews, Aliexpress, Category
 from .forms import FeedbacksForm
 
-class Index(ListView):
+class Categor:
+    """Жанры и года выхода фильмов"""
+    def get_category(self):
+        return Category.objects.all()
+
+
+class Index(Categor, ListView):
     #Домашняя страница, список новостей
     model = News
     queryset = News.objects.all()
     template_name = 'reviews_ali/index.html'
 
-class NewsDetailView(DetailView):
+class NewsDetailView(Categor,DetailView):
     model = News
     slug_field = 'url'
     template_name = 'reviews_ali/news_detail.html'
 
-class SearchFilm(ListView):
+class SearchFilm(Categor,ListView):
     template_name = 'reviews_ali/index.html'
 
     def get_queryset(self):
@@ -28,17 +35,13 @@ class SearchFilm(ListView):
         context['search_news'] = f'searchnews={self.request.GET.get("search_news")}&'
         return context
 
-class VideoView(ListView):
+class VideoView(Categor, ListView):
     model = Reviews
     queryset = Reviews.objects.all()
     template_name = 'reviews_ali/video.html'
 
-class CategoryGet(ListView):
-    model = Category
-    queryset = Category.objects.all()
-    template_name = 'include/sidebar.html'
 
-class VideoDetaillView(DetailView):
+class VideoDetaillView(Categor, DetailView):
     model = Reviews
     slug_field = 'url'
     template_name = 'reviews_ali/video_detail.html'
@@ -48,7 +51,7 @@ class VideoDetaillView(DetailView):
         context['form'] = FeedbacksForm()
         return context
 
-class SearchVideo(ListView):
+class SearchVideo(Categor, ListView):
     template_name = 'reviews_ali/video.html'
 
     def get_queryset(self):
@@ -71,30 +74,18 @@ class AddFeedback(View):
             form.save()
         return redirect(video.get_absolute_url())
 
-class AddFeedbackNews(View):
-    def post(self, request, pk):
-        form = FeedbacksForm(request.POST)
-        news = News.objects.get(id=pk)
-        if form.is_valid():
-            form = form.save(commit=False)
-            if request.POST.get('parent', None):
-                form.parent_id = int(request.POST.get('parent'))
-            form.news = news
-            form.save()
-        return redirect(news.get_absolute_url())
-
-class AliexpressView(ListView):
+class AliexpressView(Categor, ListView):
     model = Aliexpress
     queryset = Aliexpress.objects.all()
     template_name = 'reviews_ali/aliexpress_list.html'
 
-class AliexpressDetail(DetailView):
+class AliexpressDetail(Categor, DetailView):
     model = Aliexpress
     slug_field = 'url'
     queryset = Aliexpress.objects.all()
     template_name = 'reviews_ali/aliexpress_detail.html'
 
-class SearchAli(ListView):
+class SearchAli(Categor, ListView):
     template_name = 'reviews_ali/aliexpress_list.html'
 
     def get_queryset(self):
@@ -103,4 +94,20 @@ class SearchAli(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['search_ali'] = f'searchali={self.request.GET.get("search_ali")}&'
+        return context
+
+class FilterCategory(Categor, ListView):
+    template_name = 'reviews_ali/index.html'
+
+    def get_queryset(self):
+        '''ИСПРАВИТЬ CATEGORY OBJECTS'''
+        queryset = Category.objects.filter(
+            Q(news_category__in=self.request.GET.getlist("category")) |
+            Q(review_category__in=self.request.GET.getlist("category"))
+        ).distinct()
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["category"] = ''.join([f"category={x}&" for x in self.request.GET.getlist("category")])
         return context
