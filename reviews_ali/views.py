@@ -12,7 +12,6 @@ class Categor:
     def get_category(self):
         return Category.objects.all()
 
-
 class Index(Categor, ListView):
     #Домашняя страница, список новостей
     model = News
@@ -96,18 +95,38 @@ class SearchAli(Categor, ListView):
         context['search_ali'] = f'searchali={self.request.GET.get("search_ali")}&'
         return context
 
+#class FilterCategory(Categor, ListView):
+    #template_name = 'reviews_ali/video.html'
+
+    #def get_queryset(self):
+        #'''ИСПРАВИТЬ CATEGORY OBJECTS'''
+        #queryset = Reviews.objects.filter(
+            #Q(news_category__in=self.request.GET.getlist("category")) |
+            #category__in=self.request.GET.getlist('category')
+        #)
+        #return queryset
+
+    #def get_context_data(self, *args, **kwargs):
+        #context = super().get_context_data(*args, **kwargs)
+        #context["category"] = ''.join([f"category={x}&" for x in self.request.GET.getlist("category")])
+        #return context
+
 class FilterCategory(Categor, ListView):
-    template_name = 'reviews_ali/index.html'
+    template_name = 'reviews_ali/filtercategory.html'
 
     def get_queryset(self):
-        '''ИСПРАВИТЬ CATEGORY OBJECTS'''
-        queryset = Category.objects.filter(
-            Q(news_category__in=self.request.GET.getlist("category")) |
-            Q(review_category__in=self.request.GET.getlist("category"))
-        ).distinct()
+        queryset = 0
         return queryset
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        context["category"] = ''.join([f"category={x}&" for x in self.request.GET.getlist("category")])
+        context['videos'] = Reviews.objects.filter(
+            category__in=self.request.GET.getlist('category')
+        )
+        context['alies'] = Aliexpress.objects.filter(
+            category__in=self.request.GET.get('category')
+        )
+        context['newss'] = News.objects.filter(
+            category_news__in=self.request.GET.get('category')
+        )
         return context
