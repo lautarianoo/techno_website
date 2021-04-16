@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'reviews_ali',
+    'users',
     'bootstrap3',
     'embed_video',
 ]

@@ -95,21 +95,6 @@ class SearchAli(Categor, ListView):
         context['search_ali'] = f'searchali={self.request.GET.get("search_ali")}&'
         return context
 
-#class FilterCategory(Categor, ListView):
-    #template_name = 'reviews_ali/video.html'
-
-    #def get_queryset(self):
-        #'''ИСПРАВИТЬ CATEGORY OBJECTS'''
-        #queryset = Reviews.objects.filter(
-            #Q(news_category__in=self.request.GET.getlist("category")) |
-            #category__in=self.request.GET.getlist('category')
-        #)
-        #return queryset
-
-    #def get_context_data(self, *args, **kwargs):
-        #context = super().get_context_data(*args, **kwargs)
-        #context["category"] = ''.join([f"category={x}&" for x in self.request.GET.getlist("category")])
-        #return context
 
 class FilterCategory(Categor, ListView):
     template_name = 'reviews_ali/filtercategory.html'
