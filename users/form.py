@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import check_password
 
 User = get_user_model()
 
-class UserLoginForm(forms.ModelForm):
+class UserLoginForm(forms.Form):
     email = forms.CharField(label='Email', widget=forms.EmailInput())
     password = forms.CharField(label='Password', widget=forms.PasswordInput())
 
@@ -21,3 +21,19 @@ class UserLoginForm(forms.ModelForm):
             if not user:
                 raise forms.ValidationError('Данный пользователь отключён')
         return super(UserLoginForm, self).clean(*args, **kwargs)
+
+class UserRegisterForm(forms.ModelForm):
+    name = forms.CharField(label='Username', widget=forms.TextInput())
+    email = forms.EmailField(label='Email', widget=forms.EmailInput())
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput())
+    password2 = forms.CharField(label='Password Repeat', widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('email', 'name', )
+
+    def clean_password2(self):
+        data = self.cleaned_data
+        if data['password1'] != data['password2']:
+            raise forms.ValidationError('Пароли не совпадают')
+        return data['password2']
