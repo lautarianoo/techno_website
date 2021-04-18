@@ -37,3 +37,11 @@ class UserRegisterForm(forms.ModelForm):
         if data['password1'] != data['password2']:
             raise forms.ValidationError('Пароли не совпадают')
         return data['password2']
+
+class UserUpdateForm(forms.ModelForm):
+    name = forms.CharField(label='Username', max_length=80, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    send_email = forms.BooleanField(label=' Send Email', widget=forms.CheckboxInput(), required=False)
+
+    class Meta:
+        model = User
+        fields = ('name', 'send_email', )

@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .form import UserLoginForm, UserRegisterForm
+from .form import UserLoginForm, UserRegisterForm, UserUpdateForm
 
 User = get_user_model()
 def userloginview(request):
@@ -29,3 +29,19 @@ def userregisterview(request):
 def logoutview(request):
     logout(request)
     return HttpResponseRedirect(reverse('reviews_ali:index'))
+
+def userupdateview(request):
+    if request.user.is_authenticated:
+        user = request.user
+        if request.method == 'POST':
+            form = UserUpdateForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                user.name = data['name']
+                user.send_email = data['send_email']
+                user.save()
+                return HttpResponseRedirect(reverse('reviews_ali:index'))
+        form = UserUpdateForm(initial={'name': user.name, 'send_email': user.send_email})
+        return render(request, 'users/settings_user.html', {'form': form})
+    else:
+        return HttpResponseRedirect(reverse('users:login'))
